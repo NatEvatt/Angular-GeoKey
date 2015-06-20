@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h3 class="modal-title">Bike Touring Map</h3>
+</div>
+<div class="modal-body">
+    <h1 class="noMargin">Login</h1>
+    <table class="loginTable">
+        <tr>
+            <td>Email:</td>
+            <td>
+                <input type="text" id="userEmail" ng-model="model.userEmail"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td>
+                <input type="password" id="userPassword" ng-model="model.userPassword" />
+            </td>
+        </tr>
+    </table>
+    <p class="littleBlue">New User? Register<span ng-click="$scope.showRegisterMessage()" class="btn mySmlBtn">Here</span>
+    </p>
+</div>
+
+<div class="modal-footer">
+    <button class="btn mySmlBtn" ng-click='$close(model)'>Submit</button>
+</div>
+
+
+

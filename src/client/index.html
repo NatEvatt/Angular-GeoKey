@@ -1,0 +1,50 @@
+<!doctype html>
+
+<html lang="en" ng-app='app'>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Angular Google Maps Example</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet/less" href="content/css/style.less">
+</head>
+
+<body ng-controller='MapController'>
+    <ui-view></ui-view>
+<!--    <div ng-include="'main.html'"></div>-->
+    <!-- Third part -->
+    <script src="content/libs/angular/angular.min.js"></script>
+    <script src="content/libs/jquery/dist/jquery.min.js"></script>
+    <script src="content/libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="content/libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="content/libs/lodash/lodash.min.js"></script>
+    <script src="content/libs/angular-google-maps/dist/angular-google-maps.js"></script>
+    <script src="content/libs/less/dist/less.min.js"></script>
+    <script src="content/libs/a0-angular-storage/dist/angular-storage.min.js"></script>
+    <script src="content/libs/togeojson/togeojson.js"></script>
+    
+    <!--    <script ="https://maps.googleapis.com/maps/api/js"></script>-->
+
+    <!-- My code -->
+    <!-- inject:js -->
+    <script src="app/app.module.js"></script>
+    <script src="app/core/core.module.js"></script>
+    <script src="app/map/mapController.js"></script>
+    <script src="app/map/simpleController.js"></script>
+    <script src="app/edits/createTrip.js"></script>
+    <script src="app/edits/editTrip.js"></script>
+    <script src="app/edits/editsShell.js"></script>
+    <script src="app/core/addToken.js"></script>
+    <script src="app/core/common.js"></script>
+    <script src="app/core/currentUser.js"></script>
+    <script src="app/core/dataFactory.js"></script>
+    <script src="app/core/loginRedirect.js"></script>
+    <script src="app/core/oauth.js"></script>
+    <script src="app/core/messaging/messaging.js"></script>
+    <!-- endinject -->
+
+
+</body>
+
+</html>

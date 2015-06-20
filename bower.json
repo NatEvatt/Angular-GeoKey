@@ -1,0 +1,26 @@
+{
+  "name": "Angular-Gmaps",
+  "version": "0.0.1",
+  "description": "A test to set up angularjs with Google Maps",
+  "main": "index.html",
+  "keywords": [
+    "angularjs",
+    "gmaps"
+  ],
+  "authors": [
+    "Nat Evatt"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "a0-angular-storage": "~0.0.11",
+    "less": "~2.5.1",
+    "togeojson": "~0.11.1"
+  }
+}

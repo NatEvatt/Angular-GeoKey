@@ -1,0 +1,179 @@
+<div class="container">
+
+    <div class="jumbotron">
+        <h1>Edit A Trip!</h1>
+        <p class="lead">This is where you can edit one of your maps</p>
+        </p>
+    </div>
+
+    <div class="row marketing">
+        <table class="addTripForm">
+            <tr>
+                <td>
+                    <h4>Title of the trip</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.titleDet" name="titleDet" id="titleDet" type="text" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Ride image</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.rideImgDet" id="rideImgDet" name="textinput" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Trip description</h4>
+                </td>
+                <td>
+                    <textarea ng-model="theForm.tripDet" id="tripDet" name="textarea">default text</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Date of the Trip</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.dateDet" id="dateDet" name="dateDet" type="text" placeholder="June 8th - June 14th 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Riders of the Trip</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.ridersDet" id="ridersDet" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Distance of the Trip</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.distanceDet" id="distanceDet" name="" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Duration of the Trip</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.durationDet" id="durationDet" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Miles Per Day</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.milePerDet" id="milePerDet" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Total Ascent</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.ascentDet" id="ascentDet" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Total Descent </h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.descentDet" id="descentDet" name="descentDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Starting Elevation</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.startElevDet" id="startElevDet" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Finishing Elevation</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.finElevDet" id="finElevDet" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Minimum Elevation</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.minElevDet" id="minElevDet" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Maximum Elevation</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.maxElevDet" id="maxElevDet" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Latitude and Longitude for your Marker</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.latlng" id="latlng" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Zoom</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.zoom" id="zoom" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>KML Links</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.kmlLayers" id="kmlLayers" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Picases Photo Album Link</h4>
+                </td>
+                <td>
+                    <input ng-model="theForm.picasaLink" id="picasaLink" name="ridersDet" type="text" placeholder="California 2014" class="input-xlarge">
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <p>
+<!--                        <button id="login" name="login" class="btn btn-orange" ng-click="retrieveAccessToken()">Login</button>-->
+                        <button id="editTrip" name="editTrip" class="btn btn-orange" ng-click="submitEditTrip()">Submit</button>
+<!--                        <button id="loadEditTrip" name="loadEditTrip" class="btn btn-orange" ng-click="loadEditTrip(18)">Load</button>-->
+                        <button id="deleteTrip" name="deleteTrip" class="btn myWarning" ng-click="confirmDeleteTrip()">Delete</button>
+
+                </td>
+                <td></td>
+            </tr>
+
+        </table>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <p>&copy; Company 2014</p>
+</footer>
+
+</div>
+
+<!-- /container -->

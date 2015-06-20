@@ -1,0 +1,317 @@
+@leftHandWidth: 300px;
+@darkGrey: #898989;
+@orange: #f7952a;
+@blue: #20bdc2;
+@white: #ffffff;
+@black: #000000;
+@red: red;
+html {
+    height: 100%
+}
+
+body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+
+#map_canvas {
+    position: relative;
+}
+
+#rightPanel .angular-google-map-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: @leftHandWidth;
+}
+
+#createTripMap .angular-google-map-container {
+    height:400px;
+}
+
+#leftPanel {
+    width: 299px;
+    float: left;
+    height: 100%;
+    max-height: 100%;
+    border-right: 1px solid @white;
+    background-color: #efefef;
+    overflow: hidden;
+}
+
+#rightPanel {
+    float: left;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    width: -moz-calc(100% - @leftHandWidth);
+    width: -webkit-calc(100% - @leftHandWidth);
+    width: calc(100% - @leftHandWidth);
+}
+
+#panelContainer {
+    position: absolute;
+    height: 100%;
+    width: @leftHandWidth;
+    overflow-y: scroll;
+    overflow-y: scroll;
+}
+
+#floatingDiv {
+    position: absolute;
+    right: -300px;
+    background-color: #20bdc2;
+    width: 360px;
+}
+
+.titleWords {
+    color: #000;
+    font-family: League Gothic, "league-gothic", sans-serif;
+    font-size: 28px;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 2px 2px 0px #eee, 3px 3px 0px #707070;
+    font-weight: normal;
+    margin: 33px 10px 0px 10px;
+    position: relative;
+}
+
+#mapLogo {
+    width: 60px;
+    float: left;
+    margin-right: 7px;
+    background: url("../images/bike_icon_logo_60.png") no-repeat;
+    height: 60px;
+}
+
+#mapLogo:hover {
+    cursor: pointer;
+    background: url("../images/bike_icon_logo_reverse_60.png") no-repeat;
+}
+
+.mapButton {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 7px 14px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    -webkit-user-select: none;
+    margin: 11px 5px 11px 0px;
+    background-color: @orange;
+    color: @white;
+    border: 1px solid @white;
+    width: 90px;
+}
+
+.mapButton:hover {
+    background-color: @darkGrey;
+    border: 1px solid @orange;
+}
+
+.panelButton {
+    width: 120px;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding-top: 4px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    -webkit-user-select: none;
+    margin: 5px 7px;
+    background-color: @orange;
+    color: @white;
+    border: 1px solid @white;
+}
+
+.panelButton:hover {
+    background-color: @darkGrey;
+    border: 1px solid @orange;
+}
+
+.panelButton a {
+    text-decoration: none;
+    color: @white;
+}
+
+.modal-header {
+    background-color: @blue;
+    color: @white;
+    font-size: 18px;
+}
+
+.mySmlBtn {
+    border: 2px solid @orange;
+    padding: 2px 6px;
+    background-color: @white;
+    margin: 4px;
+}
+
+td {
+    padding: 10px;
+}
+
+.noMargin {
+    margin: 0px;
+}
+
+.littleBlue {
+    color: @blue;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.modal-footer {
+    padding: 15px;
+    margin-top: 0px;
+}
+
+.modal-body {
+    padding: 15px;
+}
+
+textarea,
+input {
+    width: 300px;
+}
+/* ***** Bike Details Style ***** */
+
+.BLOCKQUOTE {
+    font-family: Verdana;
+    font-size: 11px;
+    color: @black;
+    line-height: 1.5;
+    letter-spacing: .25px;
+    padding: 10px;
+    line-height: 1.5em;
+}
+
+.inline {
+    display: inline;
+}
+
+#rideDetails {}
+
+#headerDiv {
+    margin-top: 25px;
+}
+
+P.BLOCKQUOTE2 {
+    font-family: Verdana;
+    font-size: 11px;
+    color: #FFFFFF;
+    line-height: 1.5;
+    letter-spacing: .25px;
+    margin-left: 4px;
+    margin-right: 4px;
+    line-height: 1.5em;
+    margin: 0 1px 0 0;
+    padding: 2px 5px;
+    background: #1CADB2;
+    border: 1px solid #000000;
+}
+
+P.BLOCKQUOTE3 {
+    font-family: Verdana;
+    font-size: 11px;
+    color: #000000;
+    line-height: 1.5;
+    letter-spacing: .25px;
+    margin-left: 4px;
+    margin-right: 4px;
+    line-height: 1.5em;
+    margin: 0 1px 0 0;
+    padding: 2px 5px;
+    background: #EAEBD8;
+    border: 1px solid #000000;
+}
+
+P.div {
+    font-family: Verdana;
+    font-size: 11px;
+    color: #000000;
+    line-height: 1.5;
+    letter-spacing: .25px;
+    margin-left: 2px;
+    margin-right: 2px;
+    line-height: 1.5em;
+}
+
+table.alerts {
+    text-align: left;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 11px;
+    color: #000000;
+    border: 0px;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    margin: 10px;
+}
+
+table.alerts td {
+    padding: 3px;
+}
+/*  ***** Edits ***** */
+
+.header h3 {
+    line-height: 60px;
+    padding-bottom: 0px;
+}
+
+#editShellNav {
+    width: 250px;
+    position: absolute;
+    right: 0px;
+    top: 20px;
+}
+
+.text-muted {
+    color: @blue;
+}
+
+.jumbotron {
+    background-color: @blue;
+    color: @white;
+}
+
+.addTripForm td {
+    width: 300px;
+    padding: 10px;
+}
+
+.addTripForm tr {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.addTripForm {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.btn.btn-orange {
+    background-color: @orange;
+    color: @white;
+}
+
+.myWarning {
+    background-color: @red;
+}
