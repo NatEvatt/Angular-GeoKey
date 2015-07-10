@@ -16,8 +16,8 @@
                 method: 'post',
                 data: $.param({
                     //uses jQuery param to serialize data
-                    client_id: '**********************',
-                    client_secret: '*****************',
+                    client_id: '28pYvreSFxlDMgSLLFv9u8eWyn3dDZuOxSgLKeoo',
+                    client_secret: 'rLtFPPpqHskrrPmy1viEYP1vCGFJu443Buf4XJi9',
                     username: username,
                     password: password,
                     grant_type: 'password'
