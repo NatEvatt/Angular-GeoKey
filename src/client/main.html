@@ -8,16 +8,6 @@
 
     <div id="rightPanel">
         <ui-gmap-google-map center='map.center' zoom='map.zoom'>
-
-            <ui-gmap-markers models="markers" coords="'geometry'" icon="'icon'" click="onClick">
-                <ui-gmap-windows show="'showWindow'" closeClick="'closeClick'">
-                    <div>
-                        <p>Mexi!</p>
-                        <p ng-non-bindable>This is an info window at {{ latitude | number:4 }}, {{ longitude | number:4 }}!</p>
-                        <p class="muted">My marker will stay open when the window is popped up!</p>
-                    </div>
-                </ui-gmap-windows>
-            </ui-gmap-markers>
         </ui-gmap-google-map>
     </div>
 

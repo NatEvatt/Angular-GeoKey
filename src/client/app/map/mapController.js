@@ -5,52 +5,120 @@
         .module('app')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$scope', 'uiGmapGoogleMapApi', '$window', 'common', 'dataFactory', 'oauth', '$state', 'currentUser'];
+    MapController.$inject = ['$scope', 'uiGmapGoogleMapApi', '$window', 'common', 'dataFactory', 'oauth', '$state', 'currentUser', 'uiGmapIsReady'];
 
-    function MapController($scope, uiGmapGoogleMapApi, $window, common, dataFactory, oauth, $state, currentUser) { //uiGmapGoogleMapApi
-        uiGmapGoogleMapApi.then(function (maps) {
+    function MapController($scope, uiGmapGoogleMapApi, $window, common, dataFactory, oauth, $state, currentUser, uiGmapIsReady) { //uiGmapGoogleMapApi
 
-            $scope.map = {
-                center: {
-                    latitude: 45,
-                    longitude: -73
-                },
-                zoom: 4
-            };
+        $scope.map = {
+            center: {
+                latitude: 45,
+                longitude: -73
+            },
+            zoom: 4
+        };
+
+        uiGmapIsReady.promise().then(function (maps) {
+
             $scope.show = true;
             $scope.icon = 'content/images/mapIcon50.png';
-
             $scope.markers = [];
             var messageTemplate = 'app/core/messaging/templates/';
+            maps[0].map.data.setStyle({
+                strokeColor: '#f7952a',
+                strokeWeight: 3,
+                visible: false
+            });
+            var features;
+
+            maps[0].map.data.addListener('mouseover', function (event) {
+                maps[0].map.data.overrideStyle(features[0], {
+                    visible: false
+                });
+            });
+            maps[0].map.data.addListener('mouseout', function (event) {
+                maps[0].map.data.overrideStyle(features[0], {
+                    visible: true
+                });
+            });
+
+            function zoom(map) {
+                var bounds = new google.maps.LatLngBounds();
+                map.data.forEach(function (feature) {
+                    processPoints(feature.getGeometry(), bounds.extend, bounds);
+                });
+                map.fitBounds(bounds);
+            }
+
+            function processPoints(geometry, callback, thisArg) {
+                if (geometry instanceof google.maps.LatLng) {
+                    callback.call(thisArg, geometry);
+                } else if (geometry instanceof google.maps.Data.Point) {
+                    callback.call(thisArg, geometry.get());
+                } else {
+                    geometry.getArray().forEach(function (g) {
+                        processPoints(g, callback, thisArg);
+                    });
+                }
+            }
 
             function createMarkers(response) {
+                features = maps[0].map.data.addGeoJson(response);
+                zoom(maps[0].map);
                 $scope.allTrips = response.features; //to pass to the ng-repeat in bikeIntro
-                var theFeatures = response.features;
-                var i = 0;
-                var idKey = 'id';
-                for (var trip in theFeatures) {
-                    var ret = {
-                        //                        latitude: theFeatures[trip].geometry.coordinates[1],
-                        //                        longitude: theFeatures[trip].geometry.coordinates[0],
-                        geometry: theFeatures[trip].geometry,
-                        title: theFeatures[trip].display_field.value,
-                        icon: 'content/images/mapIcon50.png'
 
+                var featureArray = response.features;
+                var i = 0;
+                for (var i = 0; i < featureArray.length; i++) {
+                    //var tripName = data.jsonData[trip]['tripDet'];
+                    //var latlng = data.jsonData[trip]['latlng'];
+                    var firstPoint = featureArray[i].geometry.coordinates[0];
+
+                    //                    var splitLatLng = latlng.split(",");
+                    var myLatlng = new google.maps.LatLng(firstPoint[1], firstPoint[0]);
+                    var image = {
+                        url: 'content/images/mapIcon50.png'
                     };
-                    ret[idKey] = i;
-                    $scope.markers.push(ret);
-                    i++;
+                    //var image ="http://maps.google.com/mapfiles/kml/shapes/cycling.png";
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        map: maps[0].map,
+                        id: i,
+                        icon: image
+                    });
+                    var test;
+                    google.maps.event.addListener(marker, 'mouseover', function () {
+                        maps[0].map.data.overrideStyle(features[this.id], {
+                            visible: true
+                        });
+                    });
+                    google.maps.event.addListener(marker, 'mouseout', function () {
+                        maps[0].map.data.overrideStyle(features[this.id], {
+                            visible: false
+                        });
+                    });
+                    google.maps.event.addListener(marker, 'click', function () {
+                        $scope.loadIndividualTrip([this.id])
+                    });
                 }
             }
 
             $scope.loadIndividualTrip = function (id) {
                 $window.sessionStorage.id = id;
                 //$scope.clearActiveLayers();
+                var dataId = getDataId(id);
 
-                dataFactory.getIndividualTrip(id).success(function (features) {
+                dataFactory.getIndividualTrip(dataId).success(function (features) {
                     successIndividualTrip(features);
                 });
             };
+            
+            function getDataId(markerId){
+                for (var i = 0; i <features.length; i++){
+                    if(i==markerId[0]){
+                        return features[i].D;   
+                    }
+                }
+            }
 
 
 
@@ -65,32 +133,32 @@
             function successIndividualTrip(data) {
                 //called when successful
                 $scope.tripId = data.id;
-                $scope.rideImgDet = 'content/' + data.properties.attributes.rideimgdet;
+                $scope.rideImgDet = 'content/images' + data.properties.rideimgdet;
 
                 //$("#headerImgDet").html(data.properties.attributes.headerimgDet);
-                $scope.titleDet = data.properties.attributes.titledet;
-                $scope.ridersDet = data.properties.attributes.ridersdet;
-                $scope.tripDet = data.properties.attributes.tripdet;
-                $scope.dateDet = data.properties.attributes.datedet;
-                $scope.distanceDet = data.properties.attributes.distancedet;
-                $scope.durationDet = data.properties.attributes.durationdet;
-                $scope.milePerDet = data.properties.attributes.mileperdet;
-                $scope.ascentDet = data.properties.attributes.ascentdet;
-                $scope.descentDet = data.properties.attributes.descentdet;
-                $scope.startElevDet = data.properties.attributes.startelevdet;
-                $scope.finElevDet = data.properties.attributes.finelevdet;
-                $scope.minElevDet = data.properties.attributes.minelevdet;
-                $scope.maxElevDet = data.properties.attributes.maxelevdet;
+                $scope.titleDet = data.properties.titledet;
+                $scope.ridersDet = data.properties.ridersdet;
+                $scope.tripDet = data.properties.tripdet;
+                $scope.dateDet = data.properties.datedet;
+                $scope.distanceDet = data.properties.distancedet;
+                $scope.durationDet = data.properties.durationdet;
+                $scope.milePerDet = data.properties.mileperdet;
+                $scope.ascentDet = data.properties.ascentdet;
+                $scope.descentDet = data.properties.descentdet;
+                $scope.startElevDet = data.properties.startelevdet;
+                $scope.finElevDet = data.properties.finelevdet;
+                $scope.minElevDet = data.properties.minelevdet;
+                $scope.maxElevDet = data.properties.maxelevdet;
 
-                if (data.properties.attributes.picasalink) {
+                if (data.properties.picasalink) {
                     //$("#picasaLink a").prop("href", data.properties.attributes.picasalink);
                     $('#photoLink').show();
-                    $scope.photoLink = data.properties.attributes.picasalink;
+                    $scope.photoLink = data.properties.picasalink;
                 } else {
                     $('#photoLink').hide();
                 }
 
-                var kmlLayers = data.properties.attributes.kmllayers.split('|XX|');
+                //var kmlLayers = data.properties.attributes.kmllayers.split('|XX|');
 
                 //                for (var i = 0; i < kmlLayers.length; i++) {
                 //                    var kmlLayer = new google.maps.KmlLayer(kmlLayers[i]);
@@ -218,18 +286,15 @@
             angular.element(document).ready(function () {
                 getTrips();
                 var token = currentUser.profile.token;
-//                if (token !== '') {
-                    if (token.length > 1) {
-                        $scope.showLoggedInButtons();
-                    } else {
-                        $scope.showLoggedOutButtons();
-                    }
-//                } else {
-//                    $scope.showLoggedOutButtons();
-//                }
+                //                if (token !== '') {
+                if (token.length > 1) {
+                    $scope.showLoggedInButtons();
+                } else {
+                    $scope.showLoggedOutButtons();
+                }
             });
-            
-            
+
+
         });
     }
 }());

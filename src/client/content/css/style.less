@@ -29,7 +29,8 @@ body {
 }
 
 #createTripMap .angular-google-map-container {
-    height:400px;
+    height: 400px;
+    position: relative;
 }
 
 #leftPanel {
@@ -152,6 +153,13 @@ body {
     color: @white;
 }
 
+.panelButton.greyed {
+    opacity: 0.5;
+}
+.panelButton.greyed:hover {
+    background-color: @orange;
+    border: 1px solid @orange;
+}
 .modal-header {
     background-color: @blue;
     color: @white;
@@ -314,4 +322,23 @@ table.alerts td {
 
 .myWarning {
     background-color: @red;
+}
+
+.tab-content {
+    padding-top: 10px;
+}
+
+.jumboLeftSide {
+    float: left;
+    width: 50%;
+}
+
+.jumboRightSide {
+    float: left;
+    margin-left: 40px;
+    width: 40%;
+}
+
+.jumbotron {
+    min-height: 250px;
 }
