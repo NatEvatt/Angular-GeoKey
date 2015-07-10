@@ -1,0 +1,5 @@
+/src/client/content/libs
+.DS_Store
+/node_modules
+/src/client/app/.DS_Store
+/src/client/.DS_Store

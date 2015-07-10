@@ -1,5 +1,5 @@
 {
-  "name": "Angular-Gmaps",
+  "name": "Angular-GeoKey",
   "version": "0.0.1",
   "description": "A test to set up angularjs with Google Maps",
   "main": "index.html",
@@ -16,11 +16,17 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "src/client/content/libs"
   ],
   "dependencies": {
-    "a0-angular-storage": "~0.0.11",
+    "angular-google-maps": "~2.1.4",
+    "angular-ui-router": "~0.2.15",
+    "angular-bootstrap": "~0.13.0",
+    "bower": "*",
+    "jquery": "~2.1.4",
+    "togeojson": "~0.12.1",
     "less": "~2.5.1",
-    "togeojson": "~0.11.1"
+    "a0-angular-storage": "~0.0.11"
   }
 }
