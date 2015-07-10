@@ -78,12 +78,17 @@
                     var image = {
                         url: 'content/images/mapIcon50.png'
                     };
+                    
+                    var markerTitle = String(i);
+                    
+                    var dataId = getDataId(i)
                     //var image ="http://maps.google.com/mapfiles/kml/shapes/cycling.png";
                     var marker = new google.maps.Marker({
                         position: myLatlng,
                         map: maps[0].map,
-                        id: i,
-                        icon: image
+                        id: dataId,
+                        icon: image,
+                        title: markerTitle
                     });
                     var test;
                     google.maps.event.addListener(marker, 'mouseover', function () {
@@ -105,16 +110,16 @@
             $scope.loadIndividualTrip = function (id) {
                 $window.sessionStorage.id = id;
                 //$scope.clearActiveLayers();
-                var dataId = getDataId(id);
+                //var dataId = getDataId(id);
 
-                dataFactory.getIndividualTrip(dataId).success(function (features) {
+                dataFactory.getIndividualTrip(id).success(function (features) {
                     successIndividualTrip(features);
                 });
             };
             
             function getDataId(markerId){
                 for (var i = 0; i <features.length; i++){
-                    if(i==markerId[0]){
+                    if(i==markerId){
                         return features[i].D;   
                     }
                 }
@@ -133,7 +138,7 @@
             function successIndividualTrip(data) {
                 //called when successful
                 $scope.tripId = data.id;
-                $scope.rideImgDet = 'content/images' + data.properties.rideimgdet;
+                $scope.rideImgDet = 'content/images/' + data.properties.rideimgdet;
 
                 //$("#headerImgDet").html(data.properties.attributes.headerimgDet);
                 $scope.titleDet = data.properties.titledet;

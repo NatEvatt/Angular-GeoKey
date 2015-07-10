@@ -18,7 +18,6 @@
             var id = $stateParams.tripId;
             var editedData = {
                 'properties': {
-                    'attributes': {
                         "titledet": $("#titleDet").val(),
                         "rideimgdet": $("#rideImgDet").val(),
                         "tripdet": $("#tripDet").val(),
@@ -37,7 +36,6 @@
                         "maxelevdet": $("#maxElevDet").val(),
                         "picasalink": $("#picasaLink").val(),
                         "kmllayers": $("#kmlLayers").val()
-                    }
                 }
             }
 
@@ -59,25 +57,25 @@
             dataFactory.getIndividualTrip($scope.tripId).success(function (data) {
                 //successIndividualTrip(data);
                 console.log(data);
-                $("#ridersDet").val(data.properties.attributes.ridersdet);
-                $("#rideImgDet").val(data.properties.attributes.rideimgdet);
-                $("#titleDet").val(data.properties.attributes.titledet);
-                $("#tripDet").val(data.properties.attributes.tripdet);
-                $("#dateDet").val(data.properties.attributes.datedet);
-                $("#ridersDet").val(data.properties.attributes.ridersdet);
-                $("#distanceDet").val(data.properties.attributes.distancedet);
-                $("#durationDet").val(data.properties.attributes.durationdet);
-                $("#milePerDet").val(data.properties.attributes.mileperdet);
-                $("#ascentDet").val(data.properties.attributes.ascentdet);
-                $("#descentDet").val(data.properties.attributes.descentdet);
-                $("#startElevDet").val(data.properties.attributes.startelevdet);
-                $("#finElevDet").val(data.properties.attributes.finelevdet);
-                $("#latlng").val(data.properties.attributes.latlng);
-                $("#zoom").val(data.properties.attributes.zoom);
-                $("#minElevDet").val(data.properties.attributes.minelevdet);
-                $("#maxElevDet").val(data.properties.attributes.maxelevdet);
-                $("#picasaLink").val(data.properties.attributes.picasalink);
-                $("#kmlLayers").val(data.properties.attributes.kmllayers);
+                $("#ridersDet").val(data.properties.ridersdet);
+                $("#rideImgDet").val(data.properties.rideimgdet);
+                $("#titleDet").val(data.properties.titledet);
+                $("#tripDet").val(data.properties.tripdet);
+                $("#dateDet").val(data.properties.datedet);
+                $("#ridersDet").val(data.properties.ridersdet);
+                $("#distanceDet").val(data.properties.distancedet);
+                $("#durationDet").val(data.properties.durationdet);
+                $("#milePerDet").val(data.properties.mileperdet);
+                $("#ascentDet").val(data.properties.ascentdet);
+                $("#descentDet").val(data.properties.descentdet);
+                $("#startElevDet").val(data.properties.startelevdet);
+                $("#finElevDet").val(data.properties.finelevdet);
+                $("#latlng").val(data.properties.latlng);
+                $("#zoom").val(data.properties.zoom);
+                $("#minElevDet").val(data.properties.minelevdet);
+                $("#maxElevDet").val(data.properties.maxelevdet);
+                $("#picasaLink").val(data.properties.picasalink);
+                $("#kmlLayers").val(data.properties.kmllayers);
 
             });
         }
