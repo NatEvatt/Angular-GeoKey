@@ -99,8 +99,8 @@
 
             var url = "http://178.62.58.84:8000/oauth2/access_token";
             var jsonArray = {
-                client_id: "28pYvreSFxlDMgSLLFv9u8eWyn3dDZuOxSgLKeoo",
-                client_secret: "rLtFPPpqHskrrPmy1viEYP1vCGFJu443Buf4XJi9",
+                client_id: "355a7b6c308e1880e7a2",
+                client_secret: "338d00867b2db3a0ec06554cbbd20cff8c9ed5a2",
                 username: "natevatt@gmail.com",
                 password: "punkface",
                 grant_type: "password"

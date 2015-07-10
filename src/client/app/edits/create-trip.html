@@ -1,23 +1,30 @@
 <div class="container">
 
     <div class="jumbotron">
-        <h1>Add A Trip!</h1>
-        <p class="lead">This is where you can add your own trip to the map.</p>
-        </p>
+        <div class='jumboLeftSide'>
+            <h1>Add A Trip!</h1>
+            <p class="lead">This is where you can add your own trip to the map.</p>
+            </p>
+        </div>
+        <div class='jumboRightSide'>
+            <p>Step 1: Upload Your File</p>
+            <p>Step 2: Fill in Trip Details</p>
+            <p>Step 3: Submit</p>
+        </div>
     </div>
 
     <tabset>
-        <tab heading="Map">
+        <tab heading="Upload Your File">
             <div id='createTripMap'>
                 <div>
-                    <p>Drag and Drop </p>
+                    <p>Add a Gpx file to the map by dragging and dropping the file on to the map. </p>
                 </div>
-                <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+                <ui-gmap-google-map center='map.center' zoom='map.zoom' ng-if='showMap'>
                     <ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable" icons='p.icons'></ui-gmap-polyline>
                 </ui-gmap-google-map>
             </div>
         </tab>
-        <tab heading="Details">
+        <tab heading="Fill in Trip Details">
             <div class="row marketing">
                 <table class="addTripForm">
                     <tr>
@@ -176,10 +183,13 @@
                 </table>
             </div>
         </tab>
+        <tab heading="Submit">
+            <button type='submit' ng-click='submitCreateTrip()' ng-class='{true:"greyed panelButton", false:"panelButton"}[submitDisabled]' ng-disabled='submitDisabled'>Submit</button>
+        </tab>
     </tabset>
 
     <footer class="footer">
-        <p>&copy; Company 2014</p>
+        <p>&copy; Your Company Here </p>
     </footer>
 
 </div>
