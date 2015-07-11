@@ -11,8 +11,8 @@
         var service = {
             showLoginMessage: showLoginMessage,
             showSimpleMessage: showSimpleMessage,
-            showFailedLogin:showFailedLogin
-            
+            showFailedLogin: showFailedLogin,
+            showDeleteWarning: showDeleteWarning
         };
 
         return service;
@@ -33,8 +33,8 @@
 
             return modal.open(options).result;
         }
-        
-        function showFailedLogin(){
+
+        function showFailedLogin() {
             return showLoginMessage(true);
         }
 
@@ -42,6 +42,11 @@
             var email = $("#userEmail").val();
             var password = $("#userPassword").val();
             return retrieveAccessToken(email, password);
+        }
+        
+        function deleteTrip(){
+            //dataFactory.deleteTrip()
+            alert('I am in here');
         }
 
         function showSimpleMessage(template, message, title) {
@@ -54,9 +59,21 @@
                 },
                 controllerAs: "model"
             }
-
             modal.open(options);
 
+        }
+
+        function showDeleteWarning(template, id) {
+            
+            var options = {
+                templateUrl: template,
+                controller: function () {
+                    this.id = id;
+                },
+                controllerAs: "model"
+            }
+
+            return modal.open(options).result;
         }
     }
 

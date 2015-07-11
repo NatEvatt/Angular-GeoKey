@@ -16,7 +16,8 @@
             getIndividualTrip: getIndividualTrip,
 //            retreiveToken: retreiveToken,
             submiEdit:submiEdit,
-            submitNewTrip: submitNewTrip
+            submitNewTrip: submitNewTrip,
+            deleteTrip: deleteTrip
         };
 
         return service;
@@ -31,6 +32,12 @@
         
         function submitNewTrip(geoJson) {
             return $http.post(geokeyData.url + '/api/projects/1/contributions/', geoJson);  
+        }
+        
+        function deleteTrip(id){
+            return $http.delete(geokeyData.url + 'api/projects/1/data-groupings/all-contributions/contributions/'+id+'/');  
+            //http://178.62.58.84:8000/api/projects/1/data-groupings/all-contributions/contributions/46/
+            alert('the Trip id is '+ id);
         }
 
 //        function retreiveToken(username, password) {

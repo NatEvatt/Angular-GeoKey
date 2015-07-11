@@ -92,12 +92,12 @@
                     });
                     var test;
                     google.maps.event.addListener(marker, 'mouseover', function () {
-                        maps[0].map.data.overrideStyle(features[this.id], {
+                        maps[0].map.data.overrideStyle(features[this.title], {
                             visible: true
                         });
                     });
                     google.maps.event.addListener(marker, 'mouseout', function () {
-                        maps[0].map.data.overrideStyle(features[this.id], {
+                        maps[0].map.data.overrideStyle(features[this.title], {
                             visible: false
                         });
                     });

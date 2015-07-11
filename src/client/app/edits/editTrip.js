@@ -11,31 +11,29 @@
 
         var messageTemplate = 'app/core/messaging/templates/';
         $scope.tripId = $stateParams.tripId;
-        $scope.theForm = {};
 
         $scope.submitEditTrip = function () {
-
             var id = $stateParams.tripId;
             var editedData = {
                 'properties': {
-                        "titledet": $("#titleDet").val(),
-                        "rideimgdet": $("#rideImgDet").val(),
-                        "tripdet": $("#tripDet").val(),
-                        "datedet": $("#dateDet").val(),
-                        "ridersdet": $("#ridersDet").val(),
-                        "distancedet": $("#distanceDet").val(),
-                        "durationdet": $("#durationDet").val(),
-                        "mileperdet": $("#milePerDet").val(),
-                        "ascentdet": $("#ascentDet").val(),
-                        "descentdet": $("#descentDet").val(),
-                        "startelevdet": $("#startElevDet").val(),
-                        "finelevdet": $("#finElevDet").val(),
-                        "latlng": $("#latlng").val(),
-                        "zoom": $("#zoom").val(),
-                        "minelevdet": $("#minElevDet").val(),
-                        "maxelevdet": $("#maxElevDet").val(),
-                        "picasalink": $("#picasaLink").val(),
-                        "kmllayers": $("#kmlLayers").val()
+                    "titledet": $("#titleDet").val(),
+                    "rideimgdet": $("#rideImgDet").val(),
+                    "tripdet": $("#tripDet").val(),
+                    "datedet": $("#dateDet").val(),
+                    "ridersdet": $("#ridersDet").val(),
+                    "distancedet": $("#distanceDet").val(),
+                    "durationdet": $("#durationDet").val(),
+                    "mileperdet": $("#milePerDet").val(),
+                    "ascentdet": $("#ascentDet").val(),
+                    "descentdet": $("#descentDet").val(),
+                    "startelevdet": $("#startElevDet").val(),
+                    "finelevdet": $("#finElevDet").val(),
+                    "latlng": $("#latlng").val(),
+                    "zoom": $("#zoom").val(),
+                    "minelevdet": $("#minElevDet").val(),
+                    "maxelevdet": $("#maxElevDet").val(),
+                    "picasalink": $("#picasaLink").val(),
+                    "kmllayers": $("#kmlLayers").val()
                 }
             }
 
@@ -45,9 +43,7 @@
                 common.messaging.showSimpleMessage(messageTemplate + 'simpleMessage.html', theMessage);
             }).error(function (e) {
                 if (e.error == "You are not allowed to update thecontribution") {
-                    var theMessage = "You do not have permission to edit this trip";
                     $scope.userLogin();
-                    //                    common.messaging.showSimpleMessage(messageTemplate + 'simpleMessage.html', theMessage); 
                 }
                 console.log('there was an error ' + e.error);
             })
@@ -90,110 +86,26 @@
                             userLogin(true);
                         });
                 });
-            //})
         }
 
-        $scope.retrieveAccessToken = function () {
-
-            var url = "http://178.62.58.84:8000/oauth2/access_token";
-            var jsonArray = {
-                client_id: "355a7b6c308e1880e7a2",
-                client_secret: "338d00867b2db3a0ec06554cbbd20cff8c9ed5a2",
-                username: "natevatt@gmail.com",
-                password: "punkface",
-                grant_type: "password"
-            };
-
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: jsonArray,
-                success: function (data) {
-                    console.log('I am in the success');
-                    $window.sessionStorage.token = data.access_token;
-                },
-                error: function (e) {
-                    console.log('there was an error ' + e.message);
-                    //console.log(e.message);
-                }
-            });
-
-        };
-
-        $scope.confirmDeleteTrip = function () {
-
-            BootstrapDialog.show({
-                title: 'WARNING',
-                message: 'Are you sure that you would like to delete this trip? Once deleted, it is gone forever...',
-                closable: false,
-                buttons: [{
-                    label: "No, Keep It",
-                    cssClass: 'btn-blueBorder',
-                    action: function (dialogItself) {
-                        dialogItself.close();
+        $scope.confirmDeleteTrip = function (id) {
+            common.messaging.showDeleteWarning(messageTemplate + "deleteWarning.html", id)
+                .then(function (response) {
+                    if (response) {
+                        dataFactory.deleteTrip(response.id)
+                            .then(function (response) {
+                                var theResponse = response;
+                                var type = 'success';
+                                var message = 'You have successfully Deleted your trip';
+                                common.messaging.showSimpleMessage(messageTemplate + 'simpleMessage.html', message, type);
+                                $state.go('main');
+                            }, function (response) {
+                                console.log('there was an error');
+                            });
+                    } else {
+                        console.log('there was an error');
                     }
-                }, {
-                    label: 'YES, Delete It',
-                    cssClass: 'btn-orange',
-                    action: function (dialogItself) {
-                        $scope.deleteTrip();
-                        dialogItself.close();
-                    }
-                }]
-            });
-        }
-
-        $scope.deleteTrip = function () {
-
-            var id = $window.sessionStorage.id
-            var token = $window.sessionStorage.token;
-
-
-            var req = {
-                method: 'DELETE',
-                url: "http://178.62.58.84:8000/api/projects/1/data-groupings/all-contributions/contributions/" + id + "/",
-                headers: {
-                    'Content-Type': "application/json",
-                    Authorization: "Bearer " + token
-                },
-                data: ""
-            }
-
-            $http(req).success(function () {
-                BootstrapDialog.show({
-                    title: 'Success',
-                    message: 'Your trip has been deleted',
-                    closable: false,
-                    buttons: [{
-                        label: "Return to the Map",
-                        cssClass: 'btn-orange',
-                        action: function (dialogItself) {
-                            $scope.returnToMap();
-                            dialogItself.close();
-                        }
-                }]
                 });
-            }).error(function (e) {
-                console.log('there was an error ' + e.message);
-            });
-
-        }
-
-        $scope.returnToMap = function () {
-            window.location.href = "index.html";
-        }
-
-        $scope.showDeleteLocationPopup = function (options, id) {
-            if (options === true) {
-                $scope.displayLocationDeletePopup = true;
-            } else {
-                $scope.displayLocationDeletePopup = false;
-            }
-            $scope.locationId = id;
-        };
-
-        $scope.editsLogin = function (username, password) {
-            alert(username, password);
         }
 
         angular.element(document).ready(function () {
