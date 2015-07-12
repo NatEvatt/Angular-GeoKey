@@ -14,30 +14,7 @@
 
         $scope.submitEditTrip = function () {
             var id = $stateParams.tripId;
-            var editedData = {
-                'properties': {
-                    "titledet": $("#titleDet").val(),
-                    "rideimgdet": $("#rideImgDet").val(),
-                    "tripdet": $("#tripDet").val(),
-                    "datedet": $("#dateDet").val(),
-                    "ridersdet": $("#ridersDet").val(),
-                    "distancedet": $("#distanceDet").val(),
-                    "durationdet": $("#durationDet").val(),
-                    "mileperdet": $("#milePerDet").val(),
-                    "ascentdet": $("#ascentDet").val(),
-                    "descentdet": $("#descentDet").val(),
-                    "startelevdet": $("#startElevDet").val(),
-                    "finelevdet": $("#finElevDet").val(),
-                    "latlng": $("#latlng").val(),
-                    "zoom": $("#zoom").val(),
-                    "minelevdet": $("#minElevDet").val(),
-                    "maxelevdet": $("#maxElevDet").val(),
-                    "picasalink": $("#picasaLink").val(),
-                    "kmllayers": $("#kmlLayers").val()
-                }
-            }
-
-            dataFactory.submiEdit(editedData, id).success(function (data) {
+            dataFactory.submitEdit($scope.theForm, id).success(function (data) {
                 //successIndividualTrip(data);
                 var theMessage = "Your Edits have been added successfully";
                 common.messaging.showSimpleMessage(messageTemplate + 'simpleMessage.html', theMessage);
@@ -51,28 +28,8 @@
 
         $scope.loadEditTrip = function () {
             dataFactory.getIndividualTrip($scope.tripId).success(function (data) {
-                //successIndividualTrip(data);
-                console.log(data);
-                $("#ridersDet").val(data.properties.ridersdet);
-                $("#rideImgDet").val(data.properties.rideimgdet);
-                $("#titleDet").val(data.properties.titledet);
-                $("#tripDet").val(data.properties.tripdet);
-                $("#dateDet").val(data.properties.datedet);
-                $("#ridersDet").val(data.properties.ridersdet);
-                $("#distanceDet").val(data.properties.distancedet);
-                $("#durationDet").val(data.properties.durationdet);
-                $("#milePerDet").val(data.properties.mileperdet);
-                $("#ascentDet").val(data.properties.ascentdet);
-                $("#descentDet").val(data.properties.descentdet);
-                $("#startElevDet").val(data.properties.startelevdet);
-                $("#finElevDet").val(data.properties.finelevdet);
-                $("#latlng").val(data.properties.latlng);
-                $("#zoom").val(data.properties.zoom);
-                $("#minElevDet").val(data.properties.minelevdet);
-                $("#maxElevDet").val(data.properties.maxelevdet);
-                $("#picasaLink").val(data.properties.picasalink);
-                $("#kmlLayers").val(data.properties.kmllayers);
-
+                $scope.fields = data.meta.category.fields;
+                $scope.theForm = data.properties;
             });
         }
 

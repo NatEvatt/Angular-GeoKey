@@ -16,10 +16,14 @@
             grant_type: 'password'
         };
         var url = 'http://178.62.58.84:8000/';
+        var projectId = 4;
+        var categoryId = 7
 
         return {
             params: params,
-            url: url
+            url: url,
+            projectId: projectId,
+            categoryId: categoryId
         };
     }
 

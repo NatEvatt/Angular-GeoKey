@@ -5,9 +5,9 @@
         .module('app')
         .controller('CreateTrip', CreateTrip);
 
-    CreateTrip.$inject = ['$scope', '$http', '$window', 'common', 'dataFactory', '$location', 'uiGmapIsReady', '$timeout', '$state'];
+    CreateTrip.$inject = ['$scope', '$http', '$window', 'common', 'dataFactory', '$location', 'uiGmapIsReady', '$timeout', '$state', 'geokeyData'];
 
-    function CreateTrip($scope, $http, $window, common, dataFactory, $location, uiGmapIsReady, $timeout, $state) {
+    function CreateTrip($scope, $http, $window, common, dataFactory, $location, uiGmapIsReady, $timeout, $state, geokeyData) {
 
         $timeout(function () {
             $scope.showMap = true;
@@ -23,12 +23,11 @@
         };
 
         uiGmapIsReady.promise().then(function (maps) {
-            //        uiGmapGoogleMapApi.then(function (maps) {
 
-            $scope.polylines = [];
+            returnFields();
+            $scope.theForm = {};
             $scope.submitDisabled = true;
             $scope.geoFileLoaded = false;
-            $scope.theForm = {};
             var newPath = "";
             var geoJsonToSave;
             var messageTemplate = 'app/core/messaging/templates/';
@@ -58,12 +57,20 @@
                         "coordinates": geoJsonToSave
                     },
                     "properties": {
-                        "titledet": $scope.theForm.titleDet
+                        "title": $scope.theForm.title
                     },
                     "meta": {
-                        "category": 1
+                        "category": geokeyData.categoryId
                     }
                 }
+            }
+
+            function returnFields() {
+                dataFactory.returnFields().success(function (data) {
+                    $scope.fields = data.fields;
+                }).error(function (e) {
+                    console.log('No fields were found at this project id and category id.  Check your values in geokeyData.js');
+                });
             }
 
             function updateSubmit() {
