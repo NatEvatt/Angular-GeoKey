@@ -78,11 +78,11 @@
                     var image = {
                         url: 'content/images/mapIcon50.png'
                     };
-                    
+
                     var markerTitle = String(i);
-                    
+
                     var dataId = getDataId(i)
-                    //var image ="http://maps.google.com/mapfiles/kml/shapes/cycling.png";
+                        //var image ="http://maps.google.com/mapfiles/kml/shapes/cycling.png";
                     var marker = new google.maps.Marker({
                         position: myLatlng,
                         map: maps[0].map,
@@ -116,11 +116,11 @@
                     successIndividualTrip(features);
                 });
             };
-            
-            function getDataId(markerId){
-                for (var i = 0; i <features.length; i++){
-                    if(i==markerId){
-                        return features[i].D;   
+
+            function getDataId(markerId) {
+                for (var i = 0; i < features.length; i++) {
+                    if (i == markerId) {
+                        return features[i].D;
                     }
                 }
             }
@@ -137,40 +137,24 @@
 
             function successIndividualTrip(data) {
                 //called when successful
+                $scope.fields = data.meta.category.fields;
+                $scope.properties = data.properties;
+                if (typeof data.properties.image === 'undefined') {
+                    $scope.properties.image = 'no_image.jpg';
+                };
+                $scope.creator = data.meta.creator.display_name;
+                $scope.updator = data.meta.updator;
                 $scope.tripId = data.id;
-                $scope.rideImgDet = 'content/images/' + data.properties.rideimgdet;
+                //                $scope.rideImgDet = 'content/images/' + data.properties.rideimgdet;
 
-                //$("#headerImgDet").html(data.properties.attributes.headerimgDet);
-                $scope.titleDet = data.properties.titledet;
-                $scope.ridersDet = data.properties.ridersdet;
-                $scope.tripDet = data.properties.tripdet;
-                $scope.dateDet = data.properties.datedet;
-                $scope.distanceDet = data.properties.distancedet;
-                $scope.durationDet = data.properties.durationdet;
-                $scope.milePerDet = data.properties.mileperdet;
-                $scope.ascentDet = data.properties.ascentdet;
-                $scope.descentDet = data.properties.descentdet;
-                $scope.startElevDet = data.properties.startelevdet;
-                $scope.finElevDet = data.properties.finelevdet;
-                $scope.minElevDet = data.properties.minelevdet;
-                $scope.maxElevDet = data.properties.maxelevdet;
-
-                if (data.properties.picasalink) {
-                    //$("#picasaLink a").prop("href", data.properties.attributes.picasalink);
-                    $('#photoLink').show();
-                    $scope.photoLink = data.properties.picasalink;
-                } else {
-                    $('#photoLink').hide();
-                }
-
-                //var kmlLayers = data.properties.attributes.kmllayers.split('|XX|');
-
-                //                for (var i = 0; i < kmlLayers.length; i++) {
-                //                    var kmlLayer = new google.maps.KmlLayer(kmlLayers[i]);
-                //                    kmlLayer.setMap(map);
-                //                    activeKmlLayers.push(kmlLayer);
+                //
+                //                if (data.properties.picasalink) {
+                //                    //$("#picasaLink a").prop("href", data.properties.attributes.picasalink);
+                //                    $('#photoLink').show();
+                //                    $scope.photoLink = data.properties.picasalink;
+                //                } else {
+                //                    $('#photoLink').hide();
                 //                }
-
 
                 checkDetailsVisibility();
                 //$scope.hideKML();

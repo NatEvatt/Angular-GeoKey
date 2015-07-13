@@ -8,64 +8,37 @@
         <button class="panelButton" id="backButton" ng-click="showIntro()">Back</button>
         <center>
             <div id="rideImgDet">
-                <img ng-src="{{rideImgDet}}" />
+                <img ng-src="content/images/{{properties.image}}" />
             </div>
         </center>
         <br />
         <div class="BLOCKQUOTE">
-            <strong>Trip: </strong>
-            <div class="inline">{{tripDet}}</div>
-            <br />
+            <div>
+                <strong>Trip: </strong>
+                <div class="inline">{{properties.title}}</div>
+                <br />
+            </div>
 
-            <strong>Date:</strong> 
-            <div id="dateDet" class="inline">{{dateDet}}</div>
-            <br />
+            <div>
+                <strong>Created By:</strong>
+                <div id="dateDet" class="inline">{{creator}}</div>
+                <br />
+            </div>
 
-            <strong>Riders:</strong> 
-            <div id="ridersDet" class="inline">{{ridersDet}}</div>
+            <div ng-show='updator'>
+                <strong>Last Updated By:</strong>
+                <div id="dateDet" class="inline">{{updator.display_name}}</div>
+                <br />
+            </div>
+
         </div>
 
         <table class="alerts">
-            <tr>
-                <td width="145px"><strong>Course Details</strong>
+            <tr ng-repeat="field in fields" ng-show="properties[field.key] && field.key !== 'image'">
+                <td><strong>{{field.name}}</strong>
                 </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td width="125px">Distance</td>
-                <td id="distanceDet">{{distanceDet}}</td>
-            </tr>
-            <tr>
-                <td>Duration</td>
-                <td id="durationDet">{{durationDet}}</td>
-            </tr>
-            <tr>
-                <td>Avg Miles/day</td>
-                <td id="milePerDet">{{milePerDet}}</td>
-            </tr>
-            <tr>
-                <td>Ascent</td>
-                <td id="ascentDet">{{ascentDet}}</td>
-            </tr>
-            <tr>
-                <td>Descent</td>
-                <td id="descentDet">{{descentDet}}</td>
-            </tr>
-            <tr>
-                <td>Start Elev</td>
-                <td id="startElevDet">{{startElevDet}}</td>
-            </tr>
-            <tr>
-                <td>Finish Elev</td>
-                <td id="finElevDet">{{finElevDet}}</td>
-            </tr>
-            <tr>
-                <td>Min Elevation</td>
-                <td id="minElevDet">{{minElevDet}}</td>
-            </tr>
-            <tr>
-                <td>Max Elevation</td>
-                <td id="maxElevDet">{{maxElevDet}}</td>
+                <td>{{properties[field.key]}}</td>
+
             </tr>
         </table>
         </p>
@@ -73,8 +46,10 @@
         <div id="panelFooter">
             <button class="panelButton" ng-click="editThisTrip(tripId)">Edit Trip</button>
             <button class="panelButton" ng-click="showIntro()">Main Menu</button>
-            <button class="panelButton"><a href="BikeTrips_bio_c2c.html">Rider Bios</a></button>
-            <button class="panelButton" id="photoLink"><a href="{{photoLink}}" target="blank">Photos of Trip</a></button>
+            <button class="panelButton"><a href="BikeTrips_bio_c2c.html">Rider Bios</a>
+            </button>
+            <button class="panelButton" id="photoLink"><a href="{{photoLink}}" target="blank">Photos of Trip</a>
+            </button>
         </div>
     </div>
 </div>

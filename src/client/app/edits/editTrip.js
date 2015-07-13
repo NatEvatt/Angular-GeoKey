@@ -14,7 +14,10 @@
 
         $scope.submitEditTrip = function () {
             var id = $stateParams.tripId;
-            dataFactory.submitEdit($scope.theForm, id).success(function (data) {
+            var submitData = {
+                "properties": $scope.theForm
+            }
+            dataFactory.submitEdit(submitData, id).success(function (data) {
                 //successIndividualTrip(data);
                 var theMessage = "Your Edits have been added successfully";
                 common.messaging.showSimpleMessage(messageTemplate + 'simpleMessage.html', theMessage);

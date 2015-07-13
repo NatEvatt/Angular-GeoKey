@@ -56,9 +56,7 @@
                         "type": "LineString",
                         "coordinates": geoJsonToSave
                     },
-                    "properties": {
-                        "title": $scope.theForm.title
-                    },
+                    "properties": $scope.theForm,
                     "meta": {
                         "category": geokeyData.categoryId
                     }
