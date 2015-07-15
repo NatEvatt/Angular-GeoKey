@@ -4,12 +4,12 @@ Angular-GeoKey is an example of a simple front-end application for the back-end 
 
 ## Features
 
-*Drag and Drop KML / GPX files onto map for easy insertion into GeoKey and fast map previewing
-*Saves GeoJSON data in local storage for fewer calls to GeoKey and increase speed.
-*Save, Edit and Delete features and feature properties
-*Register new users
-*Restrict edit and data creation to signed in users
-*Uses HTML Interceptor to handle OAuth 2 tokens
+* Drag and Drop KML / GPX files onto map for easy insertion into GeoKey and fast map previewing
+* Saves GeoJSON data in local storage for fewer calls to GeoKey and increase speed.
+* Save, Edit and Delete features and feature properties
+* Register new users
+* Restrict edit and data creation to signed in users
+* Uses HTML Interceptor to handle OAuth 2 tokens
 
 ## Live Demo
 
