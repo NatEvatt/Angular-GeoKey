@@ -10,13 +10,13 @@
     function geokeyData() {
 
         var params = {
-            client_id: '28pYvreSFxlDMgSLLFv9u8eWyn3dDZuOxSgLKeoo',
-            client_secret: 'rLtFPPpqHskrrPmy1viEYP1vCGFJu443Buf4XJi9',
+            client_id: 'xxxxxxxxxxxxxxxxx',
+            client_secret: 'xxxxxxxxxxxxxxxxxx',
             grant_type: 'password'
         };
-        var url = 'http://178.62.58.84:8000/';
-        var projectId = 4;
-        var categoryId = 7
+        var url = 'http://xxxxxxxxxxx:8000/';
+        var projectId = x;
+        var categoryId = x
 
         return {
             params: params,
