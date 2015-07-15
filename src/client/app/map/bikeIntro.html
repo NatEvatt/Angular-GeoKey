@@ -10,25 +10,15 @@
         <div id="bikeTripSelectorDiv">
             <button ng-repeat="trip in allTrips" class="panelButton" ng-click="loadIndividualTrip(trip.id)">{{trip.display_field.value}}</button>
         </div>
-
-        <!--
-        <button class="option_buttons" ng-click="loadIndividualTrip('California')">California 2009</button>
-        <br />
-        <button class="option_buttons" onClick="loadIndividualTrip('Utah')">Utah 2010</button>
-        <br/>
-        <button class="option_buttons" onClick="loadIndividualTrip('France')">Pyrenees 2011</button>
-        <br />
-        <button class="option_buttons" onClick="loadIndividualTrip('C2C')">C2C 2011</button>
-        <br />
-        <button class="option_buttons" onClick="loadIndividualTrip('Croatia')">Croatia 2013</button>
-        -->
         <div id="introImgHolder">
             <img ng-src="{{introImg.src}}" title="{{introImg.title}}" />
         </div>
+<!--
 
         <p class="BLOCKQUOTE"><strong>Or, check out the rider bios </strong>
         </p>
         <button class="panelButton"><a href="BikeTrips_bio_c2c.html">Rider Bios </a>
         </button>
+-->
     </center>
 </div>

@@ -5,16 +5,16 @@
         .module('app')
         .controller('EditsShell', EditsShell);
 
-    EditsShell.$inject = ['$scope', '$state', 'currentUser'];
+    EditsShell.$inject = ['$scope', '$state', 'myLocalStorage'];
 
-    function EditsShell($scope, $state, currentUser) {
+    function EditsShell($scope, $state, myLocalStorage) {
 
         $scope.goHome = function() {
             $state.go('main');
         };
 
         $scope.logout = function() {
-            currentUser.clearProfile();
+            myLocalStorage.clearProfile();
             $state.go('main');
         };
     }

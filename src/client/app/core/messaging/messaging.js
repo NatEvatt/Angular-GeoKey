@@ -7,12 +7,13 @@
 
     messaging.$inject = ['dataFactory', '$modal'];
 
-    function messaging(dataFactory, modal) {
+    function messaging(dataFactory, modal, scope) {
         var service = {
             showLoginMessage: showLoginMessage,
             showSimpleMessage: showSimpleMessage,
             showFailedLogin: showFailedLogin,
-            showDeleteWarning: showDeleteWarning
+            showDeleteWarning: showDeleteWarning,
+            showRegistration: showRegistration
         };
 
         return service;
@@ -33,6 +34,23 @@
 
             return modal.open(options).result;
         }
+        
+        function showRegistration(template, dialog) {
+
+            var options = {
+                templateUrl: template,
+                controller: function () {
+                    this.email = "";
+                    this.password1 = "";
+                    this.password2  = "";
+                    this.display_name = "";
+                    this.dialog = dialog;
+                },
+                controllerAs: "model"
+            }
+
+            return modal.open(options).result;
+        }
 
         function showFailedLogin() {
             return showLoginMessage(true);
@@ -42,11 +60,6 @@
             var email = $("#userEmail").val();
             var password = $("#userPassword").val();
             return retrieveAccessToken(email, password);
-        }
-        
-        function deleteTrip(){
-            //dataFactory.deleteTrip()
-            alert('I am in here');
         }
 
         function showSimpleMessage(template, message, title) {

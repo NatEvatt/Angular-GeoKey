@@ -5,7 +5,6 @@
         .module('app.core')
         .factory('geokeyData', geokeyData);
 
-    //currentUser.$inject = [];
 
     /* @ngInject */
     function geokeyData() {

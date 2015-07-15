@@ -5,9 +5,9 @@
         .module('app')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$scope', 'uiGmapGoogleMapApi', '$window', 'common', 'dataFactory', 'oauth', '$state', 'currentUser', 'uiGmapIsReady'];
+    MapController.$inject = ['$scope', 'uiGmapGoogleMapApi', '$window', 'common', 'dataFactory', 'oauth', '$state', 'myLocalStorage', 'uiGmapIsReady'];
 
-    function MapController($scope, uiGmapGoogleMapApi, $window, common, dataFactory, oauth, $state, currentUser, uiGmapIsReady) { //uiGmapGoogleMapApi
+    function MapController($scope, uiGmapGoogleMapApi, $window, common, dataFactory, oauth, $state, myLocalStorage, uiGmapIsReady) { //uiGmapGoogleMapApi
 
         $scope.map = {
             center: {
@@ -29,6 +29,7 @@
                 visible: false
             });
             var features;
+            maps[0].map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
 
             maps[0].map.data.addListener('mouseover', function (event) {
                 maps[0].map.data.overrideStyle(features[0], {
@@ -49,6 +50,23 @@
                 map.fitBounds(bounds);
             }
 
+            function zoomIndividual(id) {
+                var bounds = new google.maps.LatLngBounds();
+                maps[0].map.data.forEach(function (feature) {
+                    if (feature.D == id) {
+                        processPoints(feature.getGeometry(), bounds.extend, bounds);
+                        makeVisible(feature);
+                    }
+                });
+                maps[0].map.fitBounds(bounds);
+            }
+
+            function makeVisible(feature) {
+                maps[0].map.data.overrideStyle(feature, {
+                    visible: true
+                });
+            }
+
             function processPoints(geometry, callback, thisArg) {
                 if (geometry instanceof google.maps.LatLng) {
                     callback.call(thisArg, geometry);
@@ -58,6 +76,18 @@
                     geometry.getArray().forEach(function (g) {
                         processPoints(g, callback, thisArg);
                     });
+                }
+            }
+
+            function hideMarkers() {
+                for (var i = 0; i < $scope.markers.length; i++) {
+                    $scope.markers[i].setVisible(false);
+                }
+            }
+
+            function showMarkers() {
+                for (var i = 0; i < $scope.markers.length; i++) {
+                    $scope.markers[i].setVisible(true);
                 }
             }
 
@@ -80,7 +110,6 @@
                     };
 
                     var markerTitle = String(i);
-
                     var dataId = getDataId(i)
                         //var image ="http://maps.google.com/mapfiles/kml/shapes/cycling.png";
                     var marker = new google.maps.Marker({
@@ -104,13 +133,16 @@
                     google.maps.event.addListener(marker, 'click', function () {
                         $scope.loadIndividualTrip([this.id])
                     });
+                    $scope.markers.push(marker);
                 }
             }
 
             $scope.loadIndividualTrip = function (id) {
-                $window.sessionStorage.id = id;
-                //$scope.clearActiveLayers();
-                //var dataId = getDataId(id);
+                //                  Fields not being returned yet in the all_contributions so need to make another call to GeoKey
+                //                var featureId = getFeatureId(id);
+                //                var allFeatures = myLocalStorage.allGeoData();
+                //                var individualTrip = allFeatures.features[featureId];
+                //                successIndividualTrip(individualTrip);
 
                 dataFactory.getIndividualTrip(id).success(function (features) {
                     successIndividualTrip(features);
@@ -125,7 +157,13 @@
                 }
             }
 
-
+            function getFeatureId(markerId) {
+                for (var i = 0; i < features.length; i++) {
+                    if (features[i].D == markerId) {
+                        return i;
+                    }
+                }
+            }
 
             $scope.clearActiveLayers = function () {
                 for (var i = 0; i < activeKmlLayers.length; i++) {
@@ -145,6 +183,13 @@
                 $scope.creator = data.meta.creator.display_name;
                 $scope.updator = data.meta.updator;
                 $scope.tripId = data.id;
+                //                var featureId = getFeatureId(data.id);
+                zoomIndividual(data.id);
+                hideMarkers();
+
+                //                        set visibility of this feature
+
+
                 //                $scope.rideImgDet = 'content/images/' + data.properties.rideimgdet;
 
                 //
@@ -176,6 +221,10 @@
                 case 'logout':
                     $scope.logout();
                     break;
+                case 'refreshMap':
+                    myLocalStorage.clearGeoJSON();
+                    getTrips();
+                    break;
                 }
             };
 
@@ -186,7 +235,7 @@
 
             $scope.logout = function () {
                 //$window.sessionStorage.token;
-                currentUser.clearProfile();
+                myLocalStorage.clearProfile();
                 $scope.showLoggedOutButtons();
                 var message = "You are successfully logged out";
                 var title = "Logged Out";
@@ -217,26 +266,58 @@
             function userLogin(fail) {
                 common.messaging.showLoginMessage(messageTemplate + 'login.html', fail)
                     .then(function (response) {
-                        oauth.retreiveToken(response.userEmail, response.userPassword)
-                            .then(function (response) {
-                                var theResponse = response;
-                                var type = 'success';
-                                var message = 'You have successfully logged in!';
-                                if (response.data.access_token) {
-                                    common.messaging.showSimpleMessage(messageTemplate + 'simpleMessage.html', message, type);
-                                    $scope.showLoggedInButtons();
-                                    $window.sessionStorage.token = response.data.access_token;
-                                }
-                            }, function (response) {
-                                userLogin(true);
-                            });
+                        if (response == 'register') {
+                            registerUser();
+                        } else {
+                            oauth.retreiveToken(response.userEmail, response.userPassword)
+                                .then(function (response) {
+                                    var theResponse = response;
+                                    var type = 'success';
+                                    var message = 'You have successfully logged in!';
+                                    if (response.data.access_token) {
+                                        common.messaging.showSimpleMessage(messageTemplate + 'simpleMessage.html', message, type);
+                                        $scope.showLoggedInButtons();
+                                        //                                    $window.sessionStorage.token = response.data.access_token;
+                                    }
+                                }, function (response) {
+                                    userLogin(true);
+                                });
+                        }
+                    });
+            }
+
+            function registerUser(fail) {
+                common.messaging.showRegistration(messageTemplate + 'register.html', fail)
+                    .then(function (response) {
+                        if (response.password1 == response.password2 && response.email && response.display_name) {
+                            dataFactory.registerNewUser(response)
+                                .success(function (response) {
+                                    var message = "You have successfully Registered! Login to start adding trips to the map.";
+                                    var title = "Registration";
+                                    common.messaging.showSimpleMessage(messageTemplate + "simpleMessage.html", message, title);
+                                })
+                                .error(function (response) {
+                                    console.log('There has been an error ' + response);
+                                })
+                                //Finish the error result here
+                        } else {
+                            registerUser(true)
+                        }
                     });
             }
 
             function getTrips() {
-                dataFactory.getAllTrips().success(function (features) {
-                    createMarkers(features);
-                });
+
+                //Check if there is geo data stored in the browser's local storage, if not get data from GeoKey
+                var localGeoJson = myLocalStorage.allGeoData();
+                if (localGeoJson) {
+                    createMarkers(localGeoJson);
+                } else {
+                    dataFactory.getAllTrips().success(function (response) {
+                        myLocalStorage.setGeoJSON(response);
+                        createMarkers(response);
+                    });
+                }
             }
 
             $scope.showLoggedInButtons = function () {
@@ -258,8 +339,16 @@
 
             $scope.showIntro = function () {
                 //$scope.showKML();
+                showMarkers();
+                zoom(maps[0].map);
                 $("#bikeDetails").hide();
                 $("#bikeIntro").show();
+                //turn off visibility of route again
+                maps[0].map.data.forEach(function (feature) {
+                    maps[0].map.data.overrideStyle(feature, {
+                        visible: false
+                    });
+                });
             }
 
             function checkDetailsVisibility() {
@@ -274,7 +363,7 @@
 
             angular.element(document).ready(function () {
                 getTrips();
-                var token = currentUser.profile.token;
+                var token = myLocalStorage.profile.token;
                 //                if (token !== '') {
                 if (token.length > 1) {
                     $scope.showLoggedInButtons();

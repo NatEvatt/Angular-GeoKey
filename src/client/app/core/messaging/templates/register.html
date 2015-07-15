@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h3 class="modal-title">Bike Touring Map</h3>
+</div>
+<div class="modal-body">
+    <h1 class="noMargin">Register</h1>
+    <p ng-show="{{model.dialog}}" class="popupWarning">Either your passwords did not match or you left a feild blank. Please try again.</p>
+    <table class="loginTable">
+        <tr>
+            <td>Email:</td>
+            <td>
+                <input type="text" id="userEmail" ng-model="model.email" />
+            </td>
+        </tr>
+        <tr>
+            <td>Password: (min of 6 characters)</td>
+            <td>
+                <input type="password" id="userPassword" ng-model="model.password1" />
+            </td>
+        </tr>
+        <tr>
+            <td>Password (again):</td>
+            <td>
+                <input type="password" id="userPassword2" ng-model="model.password2" />
+            </td>
+        </tr>
+        <tr>
+            <td>Display Name:</td>
+            <td>
+                <input type="text" id="displayName" ng-model="model.display_name" />
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="modal-footer">
+    <button class="btn mySmlBtn" ng-click='$close(model)'>Submit</button>
+    <button class="btn" ng-click='$dismiss()'>Cancel</button>
+</div>

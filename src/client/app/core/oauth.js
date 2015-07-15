@@ -5,10 +5,10 @@
         .module('app.core')
         .factory('oauth', oauth);
 
-    oauth.$inject = ['$http', 'currentUser'];
+    oauth.$inject = ['$http', 'myLocalStorage'];
 
     /* @ngInject */
-    function oauth($http, currentUser) {
+    function oauth($http, myLocalStorage) {
 
         var retreiveToken = function (username, password) {
             return $http({
@@ -26,7 +26,7 @@
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
             }).success(function (response) {
-                currentUser.setProfile(username, response.access_token);
+                myLocalStorage.setProfile(username, response.access_token);
                 return 'success';
             }).error(function (e) {
                 return 'error ' + e.error_description;

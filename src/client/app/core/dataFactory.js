@@ -14,11 +14,11 @@
         var service = {
             getAllTrips: getAllTrips,
             getIndividualTrip: getIndividualTrip,
-            //            retreiveToken: retreiveToken,
             submitEdit: submitEdit,
             submitNewTrip: submitNewTrip,
             deleteTrip: deleteTrip,
-            returnFields: returnFields
+            returnFields: returnFields,
+            registerNewUser: registerNewUser
         };
 
         return service;
@@ -33,6 +33,11 @@
 
         function submitNewTrip(geoJson) {
             return $http.post(geokeyData.url + '/api/projects/' + geokeyData.projectId + '/contributions/', geoJson);
+        }
+
+        function registerNewUser(json) {
+            json.client_id = geokeyData.params.client_id;
+            return $http.post(geokeyData.url + 'api/user/', json);
         }
 
         function deleteTrip(id) {

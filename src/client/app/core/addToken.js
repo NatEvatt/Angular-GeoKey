@@ -4,14 +4,14 @@
     angular
         .module('app.core')
         .factory('addToken', addToken);
-    addToken.$inject = ['currentUser', '$q'];
+    addToken.$inject = ['myLocalStorage', '$q'];
 
     /* @ngInject */
-    function addToken(currentUser, $q) {
+    function addToken(myLocalStorage, $q) {
 
         var request = function (config) {
-            if (currentUser.profile.loggedIn) {
-                config.headers.Authorization = 'Bearer ' + currentUser.profile.token;
+            if (myLocalStorage.profile.loggedIn) {
+                config.headers.Authorization = 'Bearer ' + myLocalStorage.profile.token;
             }
             return $q.when(config);
         };
