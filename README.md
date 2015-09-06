@@ -13,7 +13,7 @@ Angular-GeoKey is an example of a simple front-end application for the back-end 
 
 ## Live Demo
 
-[Angular-GeoKey](http://178.62.58.84/Angular-GeoKey/)
+[Angular-GeoKey](http://natsmaps.com/Angular-GeoKey/)
 
 ## Installation
 
