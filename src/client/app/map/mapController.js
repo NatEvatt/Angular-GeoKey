@@ -53,7 +53,7 @@
             function zoomIndividual(id) {
                 var bounds = new google.maps.LatLngBounds();
                 maps[0].map.data.forEach(function (feature) {
-                    if (feature.D == id) {
+                    if (feature.F == id) {
                         processPoints(feature.getGeometry(), bounds.extend, bounds);
                         makeVisible(feature);
                     }
