@@ -20,6 +20,7 @@
         uiGmapIsReady.promise().then(function (maps) {
 
             $scope.show = true;
+            $scope.clickedId;
             $scope.icon = 'content/images/mapIcon50.png';
             $scope.markers = [];
             var messageTemplate = 'app/core/messaging/templates/';
@@ -53,12 +54,25 @@
             function zoomIndividual(id) {
                 var bounds = new google.maps.LatLngBounds();
                 maps[0].map.data.forEach(function (feature) {
-                    if (feature.F == id) {
+                    var theLetter = getLetterVar(feature);
+                    if (feature[theLetter] == id) {
                         processPoints(feature.getGeometry(), bounds.extend, bounds);
                         makeVisible(feature);
                     }
                 });
                 maps[0].map.fitBounds(bounds);
+            }
+
+            function getLetterVar(feature) {
+                //This function is necessary because the feature id changes variable (annoying)
+                var theLetter = "";
+                var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+                _.each(alphabet, function (letter) {
+                    if(!isNaN(feature[letter])){
+                        theLetter = letter;
+                    }
+                });
+                return theLetter;
             }
 
             function makeVisible(feature) {
@@ -126,11 +140,17 @@
                         });
                     });
                     google.maps.event.addListener(marker, 'mouseout', function () {
-                        maps[0].map.data.overrideStyle(features[this.title], {
-                            visible: false
-                        });
+                        if ($scope.clickedId !== this.id) {
+                            maps[0].map.data.overrideStyle(features[this.title], {
+                                visible: false
+                            })
+                        }
                     });
                     google.maps.event.addListener(marker, 'click', function () {
+                        $scope.clickedId = this.id;
+                        maps[0].map.data.overrideStyle(features[this.title], {
+                            visible: true
+                        });
                         $scope.loadIndividualTrip([this.id])
                     });
                     $scope.markers.push(marker);
@@ -143,7 +163,7 @@
                 //                var allFeatures = myLocalStorage.allGeoData();
                 //                var individualTrip = allFeatures.features[featureId];
                 //                successIndividualTrip(individualTrip);
-
+                $(".mapLoader").css("display","block");
                 dataFactory.getIndividualTrip(id).success(function (features) {
                     successIndividualTrip(features);
                 });
@@ -152,7 +172,8 @@
             function getDataId(markerId) {
                 for (var i = 0; i < features.length; i++) {
                     if (i == markerId) {
-                        return features[i].D;
+                        var theLetter = getLetterVar(features[i])
+                        return features[i][theLetter];
                     }
                 }
             }
@@ -202,6 +223,7 @@
                 //                }
 
                 checkDetailsVisibility();
+                $(".mapLoader").css("display","none");
                 //$scope.hideKML();
             }
 
@@ -339,6 +361,7 @@
 
             $scope.showIntro = function () {
                 //$scope.showKML();
+                $scope.clickedId = "";
                 showMarkers();
                 zoom(maps[0].map);
                 $("#bikeDetails").hide();
